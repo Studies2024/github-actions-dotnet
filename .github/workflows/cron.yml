@@ -1,12 +1,12 @@
-name: Run every 5 min
+name: Run every day at 1 am
 
 on:
   schedule:
-    - cron: "*/5 * * * *" # every 5 minutes
+    - cron: "0 1 * * *" # every day at 1 am
 
 jobs:
   cron:
-    name: Run every 5 minutes
+    name: Run every day
     runs-on: ubuntu-latest
 
     steps:
