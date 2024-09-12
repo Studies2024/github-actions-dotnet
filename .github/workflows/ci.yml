@@ -36,16 +36,20 @@ jobs:
     name: Deploy Dev
     needs: build
 
-    uses: Studies2024/github-actions-reusable/.github/workflows/step-deploy.yml@main
+    uses: ./.github/workflows/step-deploy.yml
     with:
       env: dev
+      resource_group_name: rg-dometrain-dev
+      app_service_name: app-dometrain-github-actions-gregline-dev
     secrets: inherit
 
   deploy_prod:
     name: Deploy Prod
     needs: deploy_dev
 
-    uses: Studies2024/github-actions-reusable/.github/workflows/step-deploy.yml@main
+    uses: ./.github/workflows/step-deploy.yml
     with:
       env: prod
+      resource_group_name: rg-dometrain-prod
+      app_service_name: app-dometrain-github-actions-gregline-prod
     secrets: inherit
