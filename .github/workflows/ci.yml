@@ -33,53 +33,17 @@ jobs:
           path: artifacts/
 
   deploy_dev:
-    name: deploy dev
-    runs-on: ubuntu-latest
+    name: Deploy Dev
     needs: build
-    environment: dev
 
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: dometrain-artifact
-          path: artifacts/
-
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      # Deploy to Azure Web apps
-      - name: "Deploy to Azure web service"
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: app-dometrain-github-actions-gregline-dev
-          package: artifacts/
+    uses: ./.github/workflows/step-deploy.yml
+    with:
+      env: dev
 
   deploy_prod:
-    name: deploy prod
-    runs-on: ubuntu-latest
+    name: Deploy Prod
     needs: deploy_dev
-    environment: prod
 
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: dometrain-artifact
-          path: artifacts/
-
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      # Deploy to Azure Web apps
-      - name: "Deploy to Azure web service"
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: app-dometrain-github-actions-gregline-prod
-          package: artifacts/
+    uses: ./.github/workflows/step-deploy.yml
+    with:
+      env: prod
