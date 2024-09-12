@@ -45,7 +45,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ inputs.app_service_name }}
-          slot-name: slot-
+          slot-name: slot
           package: artifacts/
 
       - name: Swap Slots
