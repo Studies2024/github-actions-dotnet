@@ -27,3 +27,21 @@ jobs:
         with:
           name: dometrain-artifact
           path: artifacts/
+
+  deploy_dev:
+    name: deploy dev
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dometrain-artifact
+          path: artifacts/
+
+      # Deploy to Azure Web apps
+      - name: "Deploy to Azure web service"
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: app-dometrain-github-actions-gregline-dev
+          package: artifacts/
